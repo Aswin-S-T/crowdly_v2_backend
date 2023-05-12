@@ -16,14 +16,16 @@ let errorResponse = {
 module.exports = {
 	getAllPost: () => {
 		return new Promise(async (resolve, reject) => {
-			await Post.find().then((result) => {
-				if (result) {
-					successResponse.data = result;
-					resolve(successResponse);
-				} else {
-					resolve(errorResponse);
-				}
-			});
+			await Post.find()
+				.sort({ createdAt: -1 })
+				.then((result) => {
+					if (result) {
+						successResponse.data = result;
+						resolve(successResponse);
+					} else {
+						resolve(errorResponse);
+					}
+				});
 		});
 	},
 	getMyPost: (userId) => {
